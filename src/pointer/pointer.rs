@@ -18,7 +18,7 @@ impl Pointer {
     }
 
     pub fn update(&mut self, current_price: f64) -> Option<PointerSignal> {
-        // First price initializes the pointer
+   
         let reference = match self.reference_price {
             Some(p) => p,
             None => {
@@ -29,13 +29,11 @@ impl Pointer {
 
         let diff = current_price - reference;
 
-        // BUY: fixed USD drop
         if diff <= -BUY_TRIGGER_USD {
             self.reference_price = Some(current_price);
             return Some(PointerSignal::BuyStep);
         }
 
-        // SELL: fixed USD rise
         if diff >= SELL_TRIGGER_USD {
             self.reference_price = Some(current_price);
             return Some(PointerSignal::SellStep);
